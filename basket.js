@@ -3,19 +3,11 @@ var basket = {
     runningTotal: function(){
         var sum = 0;
         var items = this.runBOGOF();
-        for (var i = 0, len = items.length; i < len; i++) {
-           sum += items[i].price; 
-        }
         var discount = 0;
-        if (sum > 20) {
-            discount += 10
-        }
-        if (this.customer.discountCard === true) {
-            discount += 5
-        }
-        if (discount > 0) {
-            sum = this.percDiscount(sum, discount);
-        }
+        for (var item of items) { sum += item.price; }
+        if (sum > 20) discount += 10;
+        if (this.customer.discountCard) discount += 5
+        if (discount > 0) sum = this.percDiscount(sum, discount);
         return sum;
     },
     percDiscount: function(total, discount){
@@ -27,8 +19,7 @@ var basket = {
         var potentials = [];
         var named_potentials = [];
         var returners = [];
-        for (var i = 0, len = this.items.length; i < len; i++) {
-            var item = this.items[i]
+        for (var item of this.items) {
             if (item.bogof === true) {
                 var index = named_potentials.lastIndexOf(item.name);
                 if (index == -1) {
