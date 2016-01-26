@@ -16,33 +16,20 @@ var basket = {
         return total - sub;
     },
     runBOGOF: function(){
-        var potentials = {};
-        var returners = [];
-        for (var item of this.items) {
-            if (!potentials[item.name]) potentials[item.name] = [];
-            potentials[item.name].push(item);
-            if (item.bogof === true) {
-                if (potentials[item.name].length == 2) { 
-                    delete potentials[item.name];
-                }
-            }
-        }
-        for (var key in potentials) {
-            for (var item of potentials[key]) {
-                returners.push(item);
-            }
-        }
-        return returners;
+        return this.runDeal(2, 2, 'bogof');
     },
     runTFT: function(){
+        return this.runDeal(3, 1, 'tft');
+    },
+    runDeal: function(qualifier, freebies, dealID) {
         var potentials = {};
         var returners = [];
         for (var item of this.items) {
             if (!potentials[item.name]) potentials[item.name] = [];
             potentials[item.name].push(item);
-            if (item.tft === true) {
-                if (potentials[item.name].length == 3) { 
-                    potentials[item.name].pop();
+            if (item[dealID] === true) {
+                if (potentials[item.name].length == qualifier) { 
+                    potentials[item.name].splice(0, freebies);
                 }
             }
         }
