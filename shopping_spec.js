@@ -29,11 +29,11 @@ describe('Items', function(){
 
 describe('Basket', function(){
     it('check we can get total price', function(){
-        assert.equal(5.5, basket.runningTotal());
+        assert.equal(1.5, basket.runningTotal());
     });
     it('check we get a 10% discount on baskets over £20', function(){
         basket.items.push({ name: 'steaks', price: 25 });
-        assert.equal(27.45, basket.runningTotal());
+        assert.equal(23.85, basket.runningTotal());
     });
 });
 

@@ -2,8 +2,9 @@ var basket = {
     items: require('./items.js'),
     runningTotal: function(){
         var sum = 0;
-        for (var i = 0, len = this.items.length; i < len; i++) {
-           sum += this.items[i].price; 
+        var items = this.runBOGOF();
+        for (var i = 0, len = items.length; i < len; i++) {
+           sum += items[i].price; 
         }
         if (sum > 20) {
             sum = this.percDiscount(sum, 10);
