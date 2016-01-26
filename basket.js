@@ -34,6 +34,25 @@ var basket = {
         }
         return returners;
     },
+    runTFT: function(){
+        var potentials = {};
+        var returners = [];
+        for (var item of this.items) {
+            if (!potentials[item.name]) potentials[item.name] = [];
+            potentials[item.name].push(item);
+            if (item.tft === true) {
+                if (potentials[item.name].length == 3) { 
+                    potentials[item.name].pop();
+                }
+            }
+        }
+        for (var key in potentials) {
+            for (var item of potentials[key]) {
+                returners.push(item);
+            }
+        }
+        return returners;
+    },
     customer: require('./customer.js'),
 }
 

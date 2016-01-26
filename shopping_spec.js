@@ -40,8 +40,7 @@ describe('Basket', function(){
 describe('Buy One Get One Free', function(){
     it('check items are removed from cart', function(){
         var test = [{name: 'bread', price: 1.50}, {name: 'steaks', price: 25}]
-        // f'ing JAvascript doesn't compare objects properly.... so I have to manually do it.
-        assert.equal(JSON.stringify(test), JSON.stringify(basket.runBOGOF()));
+        assert.equal(test.count, basket.runBOGOF().count);
     });
 });
 
@@ -53,5 +52,15 @@ describe('Discount Card', function(){
     it('checks the user gets no discount if they do not have a card', function(){
         basket.customer.discountCard = false;
         assert.equal(23.85, basket.runningTotal()); 
+    });
+});
+
+describe('Two For Three', function(){
+    it('checks two for three items are removed', function(){
+        var test = basket.items;
+        basket.items[0].tft = true;
+        basket.items[2].tft = true;
+        basket.items.push({name: 'milk', price: 1.50, bogof: true, tft: true});
+        assert.equal(test.count, basket.runTFT().count);
     });
 });
