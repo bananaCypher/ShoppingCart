@@ -16,24 +16,23 @@ var basket = {
         return total - sub;
     },
     runBOGOF: function(){
-        var potentials = [];
-        var named_potentials = [];
+        var potentials = {};
         var returners = [];
         for (var item of this.items) {
+            if (!potentials[item.name]) potentials[item.name] = [];
+            potentials[item.name].push(item);
             if (item.bogof === true) {
-                var index = named_potentials.lastIndexOf(item.name);
-                if (index == -1) {
-                    potentials.push(item);
-                    named_potentials.push(item.name);
-                } else {
-                    potentials.splice(index, 1);
-                    named_potentials.splice(index, 1);
+                if (potentials[item.name].length == 2) { 
+                    delete potentials[item.name];
                 }
-            } else {
+            }
+        }
+        for (var key in potentials) {
+            for (var item of potentials[key]) {
                 returners.push(item);
             }
         }
-        return returners.concat(potentials);
+        return returners;
     },
     customer: require('./customer.js'),
 }
