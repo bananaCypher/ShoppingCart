@@ -6,8 +6,15 @@ var basket = {
         for (var i = 0, len = items.length; i < len; i++) {
            sum += items[i].price; 
         }
+        var discount = 0;
         if (sum > 20) {
-            sum = this.percDiscount(sum, 10);
+            discount += 10
+        }
+        if (this.customer.discountCard === true) {
+            discount += 5
+        }
+        if (discount > 0) {
+            sum = this.percDiscount(sum, discount);
         }
         return sum;
     },
@@ -37,6 +44,7 @@ var basket = {
         }
         return returners.concat(potentials);
     },
+    customer: require('./customer.js'),
 }
 
 module.exports = basket;
